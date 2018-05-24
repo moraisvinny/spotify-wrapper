@@ -3,6 +3,7 @@ import { getAlbum, getAlbumTracks, getAlbums } from '../src/album';
 import sinon from 'sinon';
 import sinonChai from 'sinon-chai';
 import sinonStubPromise from 'sinon-stub-promise';
+import { describe } from 'mocha';
 
 sinonStubPromise(sinon);
 chai.use(sinonChai);
@@ -71,7 +72,35 @@ describe('Album', () => {
       const albums = getAlbums(['382ObEPsp2rxGrnsizN5TX','1A2GTWGtFfWp7KSQTwWOyo','2noRn2Aes5aoNVsU6iWThc']);
       expect(stubedFetch).to.have.been.calledWith('https://api.spotify.com/v1/albums?ids=382ObEPsp2rxGrnsizN5TX%2C1A2GTWGtFfWp7KSQTwWOyo%2C2noRn2Aes5aoNVsU6iWThc');
     });
+
+    it('should return the correct data from Promise', () => {
+      promise.resolves({album: 'name'});
+      const albums = getAlbums(['382ObEPsp2rxGrnsizN5TX','1A2GTWGtFfWp7KSQTwWOyo','2noRn2Aes5aoNVsU6iWThc']);
+      expect(albums.resolveValue).to.be.eql({album: 'name'});
+      
+    });
     
+  });
+
+  describe('getAlbumTracks', () => {
+    it('should call fetch fuction', () => {
+      const album = getAlbumTracks();
+      expect(stubedFetch).to.have.been.calledOnce;
+    });
+
+    it('should call fetch with the correct URL', () => {
+      const album = getAlbumTracks('4eGGMf6xNBDbmIrEjRcsfQ');
+      expect(stubedFetch).to.have.been
+        .calledWith('https://api.spotify.com/v1/albums/4eGGMf6xNBDbmIrEjRcsfQ/tracks');
+
+    });
+
+    it('should return the correct data from Promise', () => {
+      promise.resolves({album: 'name'});
+      const album = getAlbumTracks('4eGGMf6xNBDbmIrEjRcsfQ');
+      expect(album.resolveValue).to.be.eql({album: 'name'});
+      
+    });    
   });
 });
 

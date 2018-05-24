@@ -11,7 +11,7 @@ sinonStubPromise(sinon);
 let fetchedStub;
 let promise;
 
-describe('Spotify-wrapper', () =>{
+describe('Search', () =>{
   beforeEach(() => {
     fetchedStub = sinon.stub(global, 'fetch');
     promise = fetchedStub.returnsPromise();
