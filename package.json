@@ -7,6 +7,11 @@
     "test": "tests"
   },
   "scripts": {
+    "clear": "rimraf lib",
+    "create:lib": "./node_modules/.bin/babel --out-dir lib src",
+    "build": "npm run clear && npm run create:lib",
+    "build:umd": "./node_modules/.bin/webpack --outuput-filename spotify-wrapper.umd.js",
+    "build:all": "npm run build && npm run build:umd",
     "test": "./node_modules/.bin/mocha tests/**/*.spec.js --require babel-register",
     "test:w": "./node_modules/.bin/mocha tests/**/*.spec.js --require babel-register --watch",
     "test:cov": "nyc npm test"
@@ -30,6 +35,8 @@
     "url": "https://github.com/moraisvinny/spotify-wrapper/issues"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-loader": "^7.1.4",
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.26.0",
     "chai": "^4.1.2",
@@ -39,8 +46,11 @@
     "mocha": "^5.1.1",
     "node-fetch": "^2.1.2",
     "nyc": "^11.7.1",
+    "rimraf": "^2.6.2",
     "sinon": "4.5",
     "sinon-chai": "^3.0.0",
-    "sinon-stub-promise": "^4.0.0"
+    "sinon-stub-promise": "^4.0.0",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4"
   }
 }
